@@ -11,6 +11,11 @@ const menuItems = [
       path: '/dashboard/counter',
       title: 'Counter',
       subtitle: 'Contador client side',
+  },
+  {
+      path: '/dashboard/pokemon',
+      title: 'Pokemon',
+      subtitle: 'Generación estática',
   }
 ]
 
