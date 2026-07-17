@@ -1,4 +1,4 @@
-import { PokemonGrid } from "@/app/pokemon/components/PokemonGrid";
+import { PokemonGrid } from "@/app/components/pokemon/PokemonGrid";
 import { PokemonList, SinglePokemon } from "@/app/interfaces/pokemon";
 
 const getPokemonList = async(limit = 20, offset = 0): Promise<SinglePokemon[]> => {
