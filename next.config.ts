@@ -12,7 +12,8 @@ const nextConfig: NextConfig = {
         hostname: 'raw.githubusercontent.com',
       }
     ]
-  }
+  },
+  cacheComponents: true,
 };
 
 export default nextConfig;

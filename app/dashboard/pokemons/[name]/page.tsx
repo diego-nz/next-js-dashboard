@@ -1,35 +1,25 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import { Pokemon } from '@/app/interfaces/pokemon';
 import { notFound } from "next/navigation";
-import { cacheTag } from "next/cache";
+import { Pokemon, PokemonList } from '@/app/interfaces/pokemon';
+import Image from "next/image";
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: Promise<{ name: string }>;
 }
 
-
 export async function generateStaticParams() {
-  const static151Pokemon = Array.from({ length: 151 }).map((v, i) => `${i + 1}`);
-  return static151Pokemon.map((id) => ({
-    id
+  const data: PokemonList = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+    .then(res => res.json());
+  const static151Pokemon = data.results.map(pokemon => ({
+    name: pokemon.name
+  }))
+  return static151Pokemon.map(({name}) => ({
+    name
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id, name } = await getPokemon((await params).id);
-  return {
-    title: `#${id} - ${name}`,
-    description: `Página del pokemon ${name}`,
-  }
-}
-
-const getPokemon = async (id: string): Promise<Pokemon> => {
-  'use cache';
-  cacheTag('pokemon', id);
-
+const getPokemon = async (name: string): Promise<Pokemon> => {
   try {
-    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
       cache: 'force-cache',
       // Six months
       // next: {
@@ -42,9 +32,9 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
   }
 }
 
-const PokemonIdPage = async ({ params }: Props) => {
-  const { id } = await params;
-  const pokemon = await getPokemon(id);
+const PokemonNamePage = async ({ params }: Props) => {
+  const { name } = await params;
+  const pokemon = await getPokemon(name);
   return (
     <div className="flex mt-5 flex-col items-center text-slate-800">
       <div className="relative flex flex-col items-center rounded-[20px] w-[700px] mx-auto bg-white bg-clip-border  shadow-lg  p-3">
@@ -143,4 +133,4 @@ const PokemonIdPage = async ({ params }: Props) => {
   )
 }
 
-export default PokemonIdPage
+export default PokemonNamePage
