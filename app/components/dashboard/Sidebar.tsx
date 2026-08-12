@@ -16,6 +16,11 @@ const menuItems = [
       path: '/dashboard/pokemon',
       title: 'Pokemon',
       subtitle: 'Generación estática',
+  },
+  {
+      path: '/dashboard/favorites',
+      title: 'Favoritos',
+      subtitle: 'Global state',
   }
 ]
 
