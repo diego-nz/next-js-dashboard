@@ -1,9 +1,10 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/app/store";
-import { addOne, substractOne } from "@/app/store/counter/counterSlice";
+import { addOne, initCounter, substractOne } from "@/app/store/counter/counterSlice";
+import { useEffect } from "react";
 
-export const CartCounter = () => {
+export const CartCounter = ({ value = 0}) => {
 
 const count = useAppSelector( state => state.counter.count);
 const dispatch = useAppDispatch();
@@ -11,6 +12,10 @@ const dispatch = useAppDispatch();
 const handleCounter = (operation: string) => {
   return operation === 'sum' ? dispatch(addOne()) : dispatch(substractOne());
 };
+
+useEffect(() => {
+  dispatch( initCounter(value) );
+},[dispatch, value])
 
   return (
     <>
