@@ -1,6 +1,6 @@
 import { PokemonGrid } from "@/app/components/pokemon/PokemonGrid";
 import { PokemonList, SinglePokemon } from "@/app/interfaces/pokemon";
-import { cacheLife, cacheTag, revalidateTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 
 const getPokemonList = async(limit = 20, offset = 0): Promise<SinglePokemon[]> => {
   const data: PokemonList = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -21,8 +21,6 @@ export const PokemonPage = async() => {
   //   stale: 10,
   //   revalidate: 60
   // });
-
-  revalidateTag('pokemons', 'max');
 
   const pokemonList = await getPokemonList()
   return (
