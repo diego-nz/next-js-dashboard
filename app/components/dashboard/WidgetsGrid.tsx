@@ -11,6 +11,7 @@ const WidgetsGrid = () => {
         title={isCart.toString()}
         label="Contador"
         subtitle="Productos agregados"
+        href="/dashboard/counter"
       />
     </div>
   )

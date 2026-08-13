@@ -4,6 +4,16 @@ import { useAppDispatch, useAppSelector } from "@/app/store";
 import { addOne, initCounter, substractOne } from "@/app/store/counter/counterSlice";
 import { useEffect } from "react";
 
+export interface CounterResponse {
+  method: string;
+  count: number;
+}
+
+const getApiCounter = async(): Promise<CounterResponse> => {
+  const data = await fetch('/api/counter').then( res => res.json() );
+  return data;
+};
+
 export const CartCounter = ({ value = 0}) => {
 
 const count = useAppSelector( state => state.counter.count);
@@ -13,9 +23,14 @@ const handleCounter = (operation: string) => {
   return operation === 'sum' ? dispatch(addOne()) : dispatch(substractOne());
 };
 
+// useEffect(() => {
+//   dispatch( initCounter(value) );
+// },[dispatch, value])
+
 useEffect(() => {
-  dispatch( initCounter(value) );
-},[dispatch, value])
+  getApiCounter()
+    .then( ({ count }) => dispatch( initCounter(count)));
+}, [dispatch])
 
   return (
     <>
