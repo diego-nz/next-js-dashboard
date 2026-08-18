@@ -5,7 +5,7 @@ interface Props {
   pokemonList: SinglePokemon[]
 }
 
-export const PokemonGrid = async({ pokemonList }: Props) => {
+export const PokemonGrid = ({ pokemonList }: Props) => {
   return (
     <div className="flex flex-wrap gap-10 items-center justify-center">
       {pokemonList.map((pokemon) => (
